@@ -1,0 +1,41 @@
+# --- Database (PostgreSQL on Railway) ---
+datasources:
+  postgres:
+    url: ${KESTRA_PG_URL}
+    driverClassName: org.postgresql.Driver
+    username: ${KESTRA_PG_USER}
+    password: ${KESTRA_PG_PASSWORD}
+
+# --- Kestra core + AI Copilot ---
+kestra:
+  ai:
+    type: gemini
+    gemini:
+      api-key: ${GEMINI_API_KEY}
+      model-name: ${GEMINI_MODEL:`gemini-2.5-flash`}
+
+  queue:
+    type: postgres
+  repository:
+    type: postgres
+
+  storage:
+    type: local
+    local:
+      basePath: /app/storage
+
+  tasks:
+    tmpDir:
+      path: /tmp/kestra-wd/tmp
+
+  url: ${PUBLIC_URL:`http://localhost:8080/`}
+
+  server:
+    basicAuth:
+      username: ${KESTRA_USERNAME:`[email protected]`}
+      password: ${KESTRA_PASSWORD:`change-me-please`}
+
+# --- Health/metrics ---
+endpoints:
+  all:
+    port: 8081
