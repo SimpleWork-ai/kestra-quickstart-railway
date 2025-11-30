@@ -28,7 +28,7 @@ kestra:
     tmpDir:
       path: /tmp/kestra-wd/tmp
 
-  url: ${PUBLIC_URL:`http://localhost:8080/`}
+  url: ${KESTRA_URL:${PUBLIC_URL:`http://localhost:8080/`}}
 
   server:
     basicAuth:
