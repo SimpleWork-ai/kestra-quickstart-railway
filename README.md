@@ -12,10 +12,8 @@ This folder contains a ready-to-deploy Kestra service tailored for Railway. It c
    Point your Railway service (or local `docker build`) to `simplework/`. The `Dockerfile` copies `application.yaml` and exposes ports `8080` (UI/API) and `8081` (metrics/health).
 
 2. **Database variables**  
-   Provide the Postgres connection via env vars expected by `application.yaml`:
-   - `KESTRA_PG_URL`
-   - `KESTRA_PG_USER`
-   - `KESTRA_PG_PASSWORD`
+   Provide the Postgres connection via a single env var expected by `application.yaml`:
+   - `DATABASE_URL` (JDBC-style, e.g. `jdbc:postgresql://host:port/db?sslmode=require`)
 
 3. **Authentication and URL**  
    - `KESTRA_USERNAME` / `KESTRA_PASSWORD` – admin credentials for the UI.  

@@ -1,0 +1,46 @@
+id: git_sync_flows
+namespace: admin.git
+description: >
+  System flow that keeps Kestra flows in sync with a Git repository.
+  Designed to be shared between local (dev) and Railway (prod) instances.
+
+triggers:
+  - id: hourly_sync
+    type: io.kestra.core.models.triggers.types.Schedule
+    cron: "0 * * * *" # every hour
+
+tasks:
+  - id: sync_from_git
+    type: io.kestra.plugin.git.SyncFlows
+
+    # URL of the Git repository containing your flows (and optionally namespace files).
+    # Example (HTTPS): https://github.com/your-org/your-flows-repo.git
+    url: "{{ envs.GIT_SYNC_URL }}"
+
+    # Branch to sync from (dev for local, main for prod, etc.).
+    branch: "{{ envs.GIT_SYNC_BRANCH | default('main') }}"
+
+    # Namespace where flows will be written.
+    # In many setups you'll set this to something like "prod" or "dev".
+    targetNamespace: "{{ envs.GIT_SYNC_TARGET_NAMESPACE | default('default') }}"
+
+    # Directory inside the Git repo where flow YAML files live.
+    # By convention, Kestra uses `_flows` as default.
+    gitDirectory: "{{ envs.GIT_SYNC_DIRECTORY | default('_flows') }}"
+
+    # When true, subdirectories under gitDirectory are mapped to child namespaces.
+    # For example, `_flows/marketing/crm` -> `prod.marketing.crm` if targetNamespace is `prod`.
+    includeChildNamespaces: true
+
+    # Ignore invalid flows instead of failing the whole sync.
+    ignoreInvalidFlows: true
+
+    # --- Authentication (uncomment ONE strategy and configure via env vars) ---
+    # HTTPS with username + PAT (recommended for GitHub / GitLab over HTTPS):
+    # username: "{{ envs.GIT_SYNC_USERNAME }}"
+    # password: "{{ envs.GIT_SYNC_PASSWORD }}"
+
+    # SSH with private key:
+    # privateKey: "{{ envs.GIT_SYNC_SSH_KEY }}"
+    # knownHosts: "{{ envs.GIT_SYNC_KNOWN_HOSTS | default(null) }}"
+

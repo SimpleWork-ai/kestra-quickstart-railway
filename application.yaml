@@ -1,10 +1,10 @@
 # --- Database (PostgreSQL on Railway) ---
+# Uses a single JDBC-style DATABASE_URL, for example:
+# jdbc:postgresql://host:port/database?sslmode=require
 datasources:
   postgres:
-    url: ${KESTRA_PG_URL}
+    url: ${DATABASE_URL}
     driverClassName: org.postgresql.Driver
-    username: ${KESTRA_PG_USER}
-    password: ${KESTRA_PG_PASSWORD}
 
 # --- Kestra core + AI Copilot ---
 kestra:
