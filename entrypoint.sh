@@ -29,4 +29,11 @@ if [ -n "$DATABASE_URL" ]; then
   esac
 fi
 
-exec /app/kestra server standalone --config /app/config/application.yaml
+# Optional: limit worker threads for lower resource usage.
+# Example: KESTRA_WORKER_THREADS=32
+EXTRA_ARGS=""
+if [ -n "$KESTRA_WORKER_THREADS" ]; then
+  EXTRA_ARGS="--worker-thread=$KESTRA_WORKER_THREADS"
+fi
+
+exec /app/kestra server standalone $EXTRA_ARGS --config /app/config/application.yaml
