@@ -29,5 +29,4 @@ if [ -n "$DATABASE_URL" ]; then
   esac
 fi
 
-exec server standalone --config /app/config/application.yaml
-
+exec kestra server standalone --config /app/config/application.yaml

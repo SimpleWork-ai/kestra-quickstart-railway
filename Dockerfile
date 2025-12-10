@@ -20,5 +20,6 @@ EXPOSE 8080 8081
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=5 \
   CMD wget -qO- http://127.0.0.1:8081/health/readiness || exit 1
 
-# Entry point must call the kestra binary (via our adapter script)
-CMD ["/app/entrypoint.sh"]
+# Override base entrypoint to run our adapter script,
+# which will in turn call the kestra CLI.
+ENTRYPOINT ["/app/entrypoint.sh"]
