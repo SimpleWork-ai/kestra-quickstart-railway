@@ -1,5 +1,6 @@
 # Simple template to deploy Kestra on Railway
-ARG IMAGE_TAG=latest-lts
+# Use the lighter image without extra plugins by default.
+ARG IMAGE_TAG=latest-lts-no-plugins
 FROM kestra/kestra:${IMAGE_TAG}
 
 WORKDIR /app

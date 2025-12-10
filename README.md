@@ -3,7 +3,7 @@
 This folder contains a ready-to-deploy Kestra service tailored for Railway. It combines the streamlined setup from the original template (`kestra-railway/`) with the AI Copilot configuration that was previously only present in the root project.
 
 ## What you get
-- Docker image based on `kestra/kestra:latest-lts`, already wired with the expected entrypoint.
+- Docker image based on `kestra/kestra:latest-lts-no-plugins` (lighter, without extra plugins), already wired with the expected entrypoint. You can override the `IMAGE_TAG` build arg if you need the full image.
 - Writable directories for `/app/config`, `/app/flows`, and `/app/storage` so you can mount a Railway volume at `/app/storage`.
 - `application.yaml` baked into the image, referencing environment variables for Postgres, authentication, public URL, and Gemini AI.
 
