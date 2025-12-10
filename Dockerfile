@@ -8,7 +8,6 @@ RUN mkdir -p /app/config /app/flows /app/storage \
 
 # Custom entrypoint to adapt Railway's DATABASE_URL to a JDBC URL
 COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
 # Main configuration file
 COPY application.yaml /app/config/application.yaml
@@ -22,4 +21,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=5 \
 
 # Override base entrypoint to run our adapter script,
 # which will in turn call the kestra CLI.
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
